@@ -1,51 +1,101 @@
-import React, { useState } from 'react';
-import { StyleSheet, Image, View, Text } from 'react-native';
+import React from 'react';
+import { StyleSheet, Text, View, Pressable, Image } from 'react-native';
+import axios from 'axios';
+import { FontAwesome5 } from 'react-native-vector-icons';
+
+const ESP32_IP = 'http://192.168.1.100'; // Replace with the IP address of your ESP32
 
 export default function TabOneScreen() {
+  const turnOnLed = () => {
+    axios.get(`${ESP32_IP}/led/on`)
+      .then(response => {
+        console.log(response.data);
+      })
+      .catch(error => {
+        console.error(error);
+      });
+  };
 
-  // State to track the status
-  const [isActive, setIsActive] = useState(false); // 'false' means inactive initially
+  const turnOffLed = () => {
+    axios.get(`${ESP32_IP}/led/off`)
+      .then(response => {
+        console.log(response.data);
+      })
+      .catch(error => {
+        console.error(error);
+      });
+  };
 
-  // Toggle the status
-  const toggleStatus = () => {
-    setIsActive(!isActive);
+  const turnOnFan = () => {
+    axios.get(`${ESP32_IP}/fan/on`)
+      .then(response => {
+        console.log(response.data);
+      })
+      .catch(error => {
+        console.error(error);
+      });
+  };
+
+  const turnOffFan = () => {
+    axios.get(`${ESP32_IP}/fan/off`)
+      .then(response => {
+        console.log(response.data);
+      })
+      .catch(error => {
+        console.error(error);
+      });
   };
 
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>PJESEMARRJA NE MESIM</Text>
+      <Image
+        source={require('../Assets/Image/upolisLogo.png')}
+        style={styles.logo}
+      />
       
-      {/* Separator directly under the title */}
-      <View style={styles.separator} />
+      <Text style={styles.header}>Smart Campus</Text>
+      <Text style={styles.title}>POLIS SMART CAMPUS</Text>
 
-      <View>
-        <Image
-          source={{ uri: 'https://www.portalistudentor.al/media/images/POLIS_1.2e16d0ba.fill-512x512.format-webp.webp' }}
-          style={styles.PolisLogo} // Apply the style from the StyleSheet
-        />
+      <View style={styles.buttonRow}>
+        <Pressable
+          style={({ pressed }) => [
+            styles.iconButton,
+            pressed ? styles.buttonOnActive : styles.buttonOn,
+          ]}
+          onPress={turnOnLed}
+        >
+          <FontAwesome5 name="lightbulb" size={50} color="white" />
+        </Pressable>
+        <Pressable
+          style={({ pressed }) => [
+            styles.iconButton,
+            pressed ? styles.buttonOffActive : styles.buttonOff,
+          ]}
+          onPress={turnOffLed}
+        >
+          <FontAwesome5 name="lightbulb" size={50} color="white" />
+        </Pressable>
       </View>
 
-      <View>
-        <Text style={styles.text}>
-          Ju lutem skanoni karten para cdo ore mesimore qe te regjistrohet pjesemarrja ne sistem !
-        </Text>
-
-        <Image
-          source={{ uri: 'https://icons.veryicon.com/png/o/miscellaneous/effevo/attendance-1.png' }}
-          style={styles.Status} // Apply the style from the StyleSheet
-        />
-      </View>
-
-      {/* Status indicator */}
-      <View style={[styles.statusIndicator, { backgroundColor: isActive ? 'green' : 'red' }]}>
-        <Text style={styles.statusText}>{isActive ? 'Aktiv ne mesim' : 'Jo ne mesim'}</Text>
-      </View>
-
-      {/* Toggle the status on press */}
-      <View style={styles.buttonContainer}>
-        <Text style={styles.toggleButton} onPress={toggleStatus}>
-          Zere se eshte NFC qe triggers it
-        </Text>
+      <View style={styles.buttonRow}>
+        <Pressable
+          style={({ pressed }) => [
+            styles.iconButton,
+            pressed ? styles.buttonOnActive : styles.buttonOn,
+          ]}
+          onPress={turnOnFan}
+        >
+          <FontAwesome5 name="fan" size={50} color="white" />
+        </Pressable>
+        <Pressable
+          style={({ pressed }) => [
+            styles.iconButton,
+            pressed ? styles.buttonOffActive : styles.buttonOff,
+          ]}
+          onPress={turnOffFan}
+        >
+          <FontAwesome5 name="fan" size={50} color="white" />
+        </Pressable>
       </View>
     </View>
   );
@@ -54,70 +104,52 @@ export default function TabOneScreen() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    alignItems: 'center',
     justifyContent: 'center',
-    backgroundColor: '#50C878',
+    alignItems: 'center',
+    backgroundColor: '#E8F5E9',
+    paddingHorizontal: 20,
+  },
+  logo: {
+    width: 120,
+    height: 150,
+    marginBottom: 20,
+  },
+  header: {
+    fontSize: 28,
+    fontWeight: 'bold',
+    color: '#E8F5E9',
+    marginBottom: 10,
   },
   title: {
-    fontSize: 20,
-    marginTop: 40,
-    fontWeight: 'bold',
-    paddingBottom:5,
-    color: 'white',
+    fontSize: 22,
+    fontWeight: '600',
+    color: '#2E7D32',
+    marginBottom: 20,
   },
-  text: {
-    fontSize: 15,
-    marginTop: 10,
-    fontWeight: '400',
-    color: 'white',
-    textAlign: 'center',
-    paddingLeft: 5,
-    paddingRight: 5,
-    paddingTop:5,
-    
-    backgroundColor: '#50C878',
+  buttonRow: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    width: '60%',
+    marginVertical: 10,
   },
-  PolisLogo: {
-    width: 100,
-    height: 100,
-    marginTop: -150,
-  },
-  Status: {
-    width: 150,
-    height: 150,
-    marginTop: 80,
-    marginLeft: 120,
-    backgroundColor: '#50C878',
-    position: 'absolute',
-  },
-  separator: {
-    height: 1,
-    width: '80%',  // Adjust the width as needed
-    backgroundColor: 'white', // Color of the line
-    position:'relative',
-    marginBottom:-10,
-  },
-  statusIndicator: {
-    marginTop: 200,
-    width: 200,
-    height: 50,
+  iconButton: {
+    width: 80,
+    height: 80,
     justifyContent: 'center',
     alignItems: 'center',
-    borderRadius: 25,
-    marginBottom: -150,
+    borderRadius: 10,
+    marginHorizontal: 10,
   },
-  statusText: {
-    fontSize: 18,
-    fontWeight: 'bold',
-    color: 'white',
+  buttonOn: {
+    backgroundColor: '#4CAF50',
   },
-  buttonContainer: {
-    marginTop: 250,
+  buttonOnActive: {
+    backgroundColor: '#388E3C',
   },
-  toggleButton: {
-    fontSize: 18,
-    color: 'white',
-    textDecorationLine: 'underline',
-    marginBottom: -100,
+  buttonOff: {
+    backgroundColor: '#81C784',
+  },
+  buttonOffActive: {
+    backgroundColor: '#66BB6A',
   },
 });

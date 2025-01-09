@@ -27,46 +27,63 @@ export default function TabLayout() {
         headerShown: useClientOnlyValue(false, true),
       }}>
       <Tabs.Screen
-        name="index"
-        options={{
-          title: 'Smart Campus',
-          tabBarIcon: ({ color }) => <TabBarIcon name="home" color={color} />,
-          headerRight: () => (
-            <Link href="/modal" asChild>
-              <Pressable>
-                {({ pressed }) => (
-                  <FontAwesome
-                    name="info-circle"
-                    size={25}
-                    color={Colors[colorScheme ?? 'light'].text}
-                    style={{ marginRight: 15, opacity: pressed ? 0.5 : 1 }}
-                  />
-                )}
-              </Pressable>
-            </Link>
-          ),
-        }}
-      />
+  name="index"
+  options={{
+    title: 'Smart Campus',
+    tabBarIcon: ({ color }) => <TabBarIcon name="home" color="#2E7D32" />,  // Green color
+    
+    tabBarLabelStyle: {
+      color: '#2E7D32', // White text
+    },
+    headerRight: () => (
+      <Link href="/Informacione" asChild>
+        <Pressable>
+          {({ pressed }) => (
+            <FontAwesome
+              name="info-circle"
+              size={25}
+              color={Colors[colorScheme ?? 'light'].text}
+              style={{ marginRight: 15, opacity: pressed ? 0.5 : 1 }}
+            />
+          )}
+        </Pressable>
+      </Link>
+    ),
+  }}
+/>
+
       <Tabs.Screen
         name="two"
         options={{
-          title: 'Tab Two',
-          tabBarIcon: ({ color }) => <TabBarIcon name="bell" color={color} />,
+          title: 'Njoftime',
+          tabBarIcon: ({ color }) => <TabBarIcon name="bell" color="#2E7D32" />, 
+    
+          tabBarLabelStyle: {
+            color: '#2E7D32', 
+          },
         }}
       />
       <Tabs.Screen
         name="three"
         options={{
-          title: 'Tab Two',
-          tabBarIcon: ({ color }) => <TabBarIcon name="cog" color={color} />,
+          title: 'Profili',
+          tabBarIcon: ({ color }) => <TabBarIcon name="user" color="#2E7D32" />, 
+    
+          tabBarLabelStyle: {
+            color: '#2E7D32', 
+          },
         }}
       />
       <Tabs.Screen
         name="four"
         options={{
-          title: 'Tab Three',
-          tabBarIcon: ({ color }) => <TabBarIcon name="user" color={color} />,
-        }}
+          title: 'Settings',
+        
+        tabBarIcon: ({ color }) => <TabBarIcon name="cog" color="#2E7D32" />, 
+    
+        tabBarLabelStyle: {
+          color: '#2E7D32', 
+        },}}
       />
     </Tabs>
   );
