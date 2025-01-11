@@ -1,8 +1,8 @@
 import React from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
-import SplashScreen from './app/screens/SplashScreen'; // Adjust the path to your SplashScreen
-import TabOneScreen from './app/(tabs)/index'; // Adjust the path to your HomeScreen
+import SplashScreen from './app/screens/SplashScreen'; 
+import TabOneScreen from './app/(tabs)/index'; 
 
 const Stack = createStackNavigator();
 
@@ -11,7 +11,7 @@ export default function App() {
         <NavigationContainer>
             <Stack.Navigator screenOptions={{ headerShown: false }}>
                 <Stack.Screen name="Splash" component={SplashScreen} />
-                <Stack.Screen name="Home" component={TabOneScreen} /> {/* Replace with your actual Home screen */}
+                <Stack.Screen name="Home" component={TabOneScreen} /> 
             </Stack.Navigator>
         </NavigationContainer>
     );

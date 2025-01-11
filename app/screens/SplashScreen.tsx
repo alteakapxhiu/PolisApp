@@ -31,12 +31,12 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: '#4CAF50', // Green background
+    backgroundColor: '#4CAF50', 
   },
   title: {
     fontSize: 32,
     fontWeight: 'bold',
-    color: '#FFFFFF', // White text
+    color: '#FFFFFF', 
     marginBottom: 20,
   },
 });

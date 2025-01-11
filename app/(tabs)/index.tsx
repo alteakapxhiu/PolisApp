@@ -3,29 +3,28 @@ import { StyleSheet, Text, View, Pressable, Image } from 'react-native';
 import axios from 'axios';
 import { FontAwesome5 } from 'react-native-vector-icons';
 
-const ESP32_IP = 'http://192.168.1.100'; // Replace with the IP address of your ESP32
+const ESP32_IP = 'http://192.168.100.84'; // Replace with your ESP32's actual IP address
 
 export default function TabOneScreen() {
+
   const turnOnLed = () => {
-    axios.get(`${ESP32_IP}/led/on`)
+    axios.get(`${ESP32_IP}/on`)
       .then(response => {
         console.log(response.data);
       })
       .catch(error => {
-        console.error(error);
+        console.error('Error turning on LED:', error);
       });
   };
-
-  const turnOffLed = () => {
-    axios.get(`${ESP32_IP}/led/off`)
-      .then(response => {
-        console.log(response.data);
-      })
-      .catch(error => {
-        console.error(error);
-      });
-  };
-
+const turnOffLed = () => {
+  axios.get(`${ESP32_IP}/off`)
+    .then(response => {
+      console.log(response.data);
+    })
+    .catch(error => {
+      console.error('Error turning off LED:', error);
+    });
+};
   const turnOnFan = () => {
     axios.get(`${ESP32_IP}/fan/on`)
       .then(response => {
@@ -147,9 +146,10 @@ const styles = StyleSheet.create({
     backgroundColor: '#388E3C',
   },
   buttonOff: {
-    backgroundColor: '#81C784',
+    backgroundColor: '#F44336', // Red color for the default "off" button
   },
   buttonOffActive: {
-    backgroundColor: '#66BB6A',
+    backgroundColor: '#D32F2F', // Darker red for the pressed "off" button
   },
+
 });
