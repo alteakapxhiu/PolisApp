@@ -3,10 +3,10 @@ import { StyleSheet, Text, View, Pressable, Image } from 'react-native';
 import axios from 'axios';
 import { FontAwesome5 } from 'react-native-vector-icons';
 
-const ESP32_IP = 'http://192.168.100.84'; // Replace with your ESP32's actual IP address
+const ESP32_IP = 'http://192.168.162.199';
 
 export default function TabOneScreen() {
-
+  // Function to turn the LED ON
   const turnOnLed = () => {
     axios.get(`${ESP32_IP}/on`)
       .then(response => {
@@ -16,45 +16,53 @@ export default function TabOneScreen() {
         console.error('Error turning on LED:', error);
       });
   };
-const turnOffLed = () => {
-  axios.get(`${ESP32_IP}/off`)
-    .then(response => {
-      console.log(response.data);
-    })
-    .catch(error => {
-      console.error('Error turning off LED:', error);
-    });
-};
-  const turnOnFan = () => {
-    axios.get(`${ESP32_IP}/fan/on`)
+
+  // Function to turn the LED OFF
+  const turnOffLed = () => {
+    axios.get(`${ESP32_IP}/off`)
       .then(response => {
         console.log(response.data);
       })
       .catch(error => {
-        console.error(error);
+        console.error('Error turning off LED:', error);
       });
   };
 
-  const turnOffFan = () => {
+  // Function to turn the fan ON
+  const turnOnFan = () => {
     axios.get(`${ESP32_IP}/fan/off`)
       .then(response => {
         console.log(response.data);
       })
       .catch(error => {
-        console.error(error);
+        console.error('Error turning on Fan:', error);
+      });
+  };
+
+  // Function to turn the fan OFF
+  const turnOffFan = () => {
+    axios.get(`${ESP32_IP}/fan/on`)
+      .then(response => {
+        console.log(response.data);
+      })
+      .catch(error => {
+        console.error('Error turning off Fan:', error);
       });
   };
 
   return (
     <View style={styles.container}>
+      {/* Logo */}
       <Image
         source={require('../Assets/Image/upolisLogo.png')}
         style={styles.logo}
       />
-      
+
+      {/* App Header */}
       <Text style={styles.header}>Smart Campus</Text>
       <Text style={styles.title}>POLIS SMART CAMPUS</Text>
 
+      {/* LED Controls */}
       <View style={styles.buttonRow}>
         <Pressable
           style={({ pressed }) => [
@@ -64,6 +72,7 @@ const turnOffLed = () => {
           onPress={turnOnLed}
         >
           <FontAwesome5 name="lightbulb" size={50} color="white" />
+          <Text style={styles.buttonText}>LED ON</Text>
         </Pressable>
         <Pressable
           style={({ pressed }) => [
@@ -73,9 +82,11 @@ const turnOffLed = () => {
           onPress={turnOffLed}
         >
           <FontAwesome5 name="lightbulb" size={50} color="white" />
+          <Text style={styles.buttonText}>LED OFF</Text>
         </Pressable>
       </View>
 
+      {/* Fan Controls */}
       <View style={styles.buttonRow}>
         <Pressable
           style={({ pressed }) => [
@@ -85,6 +96,7 @@ const turnOffLed = () => {
           onPress={turnOnFan}
         >
           <FontAwesome5 name="fan" size={50} color="white" />
+          <Text style={styles.buttonText}>Fan ON</Text>
         </Pressable>
         <Pressable
           style={({ pressed }) => [
@@ -94,6 +106,7 @@ const turnOffLed = () => {
           onPress={turnOffFan}
         >
           <FontAwesome5 name="fan" size={50} color="white" />
+          <Text style={styles.buttonText}>Fan OFF</Text>
         </Pressable>
       </View>
     </View>
@@ -116,24 +129,24 @@ const styles = StyleSheet.create({
   header: {
     fontSize: 28,
     fontWeight: 'bold',
-    color: '#E8F5E9',
+    color: '#2E7D32',
     marginBottom: 10,
   },
   title: {
     fontSize: 22,
     fontWeight: '600',
-    color: '#2E7D32',
+    color: '#388E3C',
     marginBottom: 20,
   },
   buttonRow: {
     flexDirection: 'row',
     justifyContent: 'space-between',
-    width: '60%',
+    width: '70%',
     marginVertical: 10,
   },
   iconButton: {
-    width: 80,
-    height: 80,
+    width: 100,
+    height: 100,
     justifyContent: 'center',
     alignItems: 'center',
     borderRadius: 10,
@@ -146,10 +159,15 @@ const styles = StyleSheet.create({
     backgroundColor: '#388E3C',
   },
   buttonOff: {
-    backgroundColor: '#F44336', // Red color for the default "off" button
+    backgroundColor: '#F44336',
   },
   buttonOffActive: {
-    backgroundColor: '#D32F2F', // Darker red for the pressed "off" button
+    backgroundColor: '#D32F2F',
   },
-
+  buttonText: {
+    color: 'white',
+    fontSize: 14,
+    marginTop: 8,
+    fontWeight: 'bold',
+  },
 });
